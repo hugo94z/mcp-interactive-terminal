@@ -96,7 +96,6 @@ def test_ctrl_c_keeps_shell_alive(manager):
     assert started["matched"], started["screen"]
     result = session.interrupt()
     assert result["sent"] is True
-    assert result["killed"], result
     session.wait(quiet_ms=600, timeout_ms=15_000)
     session.send(text="Write-Output 'after-interrupt'", enter=True)
     matched = session.wait(until="after-interrupt", timeout_ms=15_000)

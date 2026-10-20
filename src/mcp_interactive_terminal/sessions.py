@@ -241,10 +241,9 @@ class TerminalSession:
                     break
                 idle_ms = (now - self.last_activity) * 1000.0
                 threshold = quiet_ms if seen_output else max(quiet_ms, 1500)
-                if quiet_ms > 0 and idle_ms >= threshold:
-                    if seen_output or self.vt.render():
-                        result.update(reason="quiet", matched=False)
-                        break
+                if quiet_ms > 0 and idle_ms >= threshold and self.vt.render():
+                    result.update(reason="quiet", matched=False)
+                    break
                 remaining = deadline - now
                 if remaining <= 0:
                     result.update(reason="timeout", matched=False)
