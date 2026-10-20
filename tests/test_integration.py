@@ -88,8 +88,12 @@ def test_cmd_interactive_set_p(manager):
 
 def test_ctrl_c_keeps_shell_alive(manager):
     session = start(manager)
-    session.send(text='python -c "import time; time.sleep(30)"', enter=True)
-    session.wait(quiet_ms=600, timeout_ms=10_000)
+    session.send(
+        text='python -c "import time; print(\'py-started\', flush=True); time.sleep(30)"',
+        enter=True,
+    )
+    started = session.wait(until="py-started", timeout_ms=30_000)
+    assert started["matched"], started["screen"]
     result = session.interrupt()
     assert result["sent"] is True
     assert result["killed"], result

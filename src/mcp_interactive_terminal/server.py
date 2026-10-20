@@ -78,7 +78,7 @@ async def terminal_start(
             shell=shell, cwd=cwd, env=env, cols=cols, rows=rows,
             name=name, replace=replace, args=args,
         )
-        ready = session.wait(quiet_ms=500, timeout_ms=8000)
+        ready = session.wait(quiet_ms=500, timeout_ms=20000)
         return {**session.info(), "ready": ready["reason"], "screen": ready["screen"]}
 
     return await anyio.to_thread.run_sync(run)
