@@ -1,0 +1,56 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mcp-interactive-terminal"
+version = "0.1.0"
+description = "MCP server exposing real interactive terminals (ConPTY) to AI agents"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [{ name = "hugo94z", url = "https://github.com/hugo94z" }]
+keywords = ["mcp", "model-context-protocol", "terminal", "pty", "conpty", "powershell", "cmd", "ai", "agent"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: System :: Shells",
+  "Topic :: System :: Systems Administration",
+  "Operating System :: Microsoft :: Windows :: Windows 10",
+  "Operating System :: Microsoft :: Windows :: Windows 11",
+]
+dependencies = [
+  "mcp>=2.0.0",
+  "pyte>=0.8.1",
+  "pywinpty>=2.0.13; sys_platform == 'win32'",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "pytest-asyncio>=0.23",
+  "pytest-timeout>=2.3",
+]
+
+[project.urls]
+Homepage = "https://github.com/hugo94z/mcp-interactive-terminal"
+Issues = "https://github.com/hugo94z/mcp-interactive-terminal/issues"
+
+[project.scripts]
+mcp-interactive-terminal = "mcp_interactive_terminal.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mcp_interactive_terminal"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "-ra"
